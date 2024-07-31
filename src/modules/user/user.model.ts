@@ -1,4 +1,5 @@
-import { AllowNull, Column, DataType, Default, Model, NotNull, PrimaryKey, Table, Unique } from "sequelize-typescript";
+import { AllowNull, Column, DataType, Default, HasOne, Model, NotNull, PrimaryKey, Table, Unique } from "sequelize-typescript";
+import { Token } from "../auth/token.model";
 
 @Table
 export class User extends Model {
@@ -27,4 +28,7 @@ export class User extends Model {
     @AllowNull(false)
     @Column(DataType.STRING)
     password: string;
+
+    @HasOne(()=>Token)
+    token:Token;
 }
