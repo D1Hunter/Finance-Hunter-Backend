@@ -1,7 +1,7 @@
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './user.model';
 import { Injectable } from '@nestjs/common';
-import { BaseAbstractRepository } from 'src/interfaces/base.abstract.repository';
+import { BaseAbstractRepository } from '../../interfaces/base.abstract.repository';
 
 @Injectable()
 export class UserRepository extends BaseAbstractRepository<User> {

@@ -8,6 +8,10 @@ import { AuthModule } from './modules/auth/auth.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './modules/auth/strategies/jwt.strategy';
 import { Token } from './modules/auth/token.model';
+import { CategoryModule } from './modules/category/category.module';
+import { Category } from './modules/category/category.model';
+import { TransactionModule } from './modules/transaction/transaction.module';
+import { Transaction } from './modules/transaction/transaction.model';
 
 @Module({
   imports: [
@@ -29,12 +33,16 @@ import { Token } from './modules/auth/token.model';
         autoLoadModels: true,
         models:[
           User,
-          Token
+          Token,
+          Category,
+          Transaction
         ]
       })}),
     PassportModule,
     UserModule,
-    AuthModule],
+    AuthModule,
+    CategoryModule,
+    TransactionModule],
   providers: [JwtStrategy],
 })
 export class AppModule {}

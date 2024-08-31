@@ -1,7 +1,19 @@
-import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+  UsePipes,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { getUsersMapper } from './mappers/get-users.mapper';
+import { ToNumberPipe } from '../../pipes/to-number.pipe';
 
 @Controller('user')
 export class UserController {
@@ -9,8 +21,15 @@ export class UserController {
 
   @Get('all')
   @UseGuards(JwtAuthGuard)
-  async getAll() {
-    return this.userService.getAll();
+  async getAll(
+    @Query('limit',ToNumberPipe) limitQ: number = 9,
+    @Query('offset',ToNumberPipe) offsetQ: number = 0,
+  ) {
+    const { limit, offset } = getUsersMapper.fromFrontToController(
+      limitQ,
+      offsetQ,
+    );
+    return this.userService.getAll(limit, offset);
   }
 
   @Post()

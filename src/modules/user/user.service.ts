@@ -7,8 +7,16 @@ import { User } from './user.model';
 export class UserService {
   constructor(private userRepository: UserRepository) {}
 
-  getAll(): Promise<User[]> {
-    return this.userRepository.findMany();
+  getAll(limit: number, offset: number): Promise<User[]> {
+    return this.userRepository.findMany({limit,offset});
+  }
+
+  getOneByEmail(email:string): Promise<User>{
+    const user = this.userRepository.findOneByEmail(email);
+    if(!user){
+      throw new NotFoundException('User with this email is not exist');
+    }
+    return user;
   }
 
   async create(dto: CreateUserDto): Promise<User> {
