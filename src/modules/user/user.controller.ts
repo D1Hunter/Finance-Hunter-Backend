@@ -4,8 +4,10 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Query,
+  Request,
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
@@ -14,6 +16,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { getUsersMapper } from './mappers/get-users.mapper';
 import { ToNumberPipe } from '../../pipes/to-number.pipe';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -32,9 +35,22 @@ export class UserController {
     return this.userService.getAll(limit, offset);
   }
 
-  @Post()
-  async create(@Body() dto: CreateUserDto) {
-    return this.userService.create(dto);
+  @Get('/:id')
+  @UseGuards(JwtAuthGuard)
+  async getUserById(@Param('id') id: string){
+    return this.userService.getOneById(id);
+  }
+
+  @Get('profile')
+  @UseGuards(JwtAuthGuard)
+  async getUserProfile(@Request() req){
+    return this.userService.getOneById(req.user.id);
+  }
+
+  @Patch('profile')
+  @UseGuards(JwtAuthGuard)
+  async updateUserProfile(@Request() req, @Body() dto:UpdateUserDto){
+    return this.userService.update(req.user.id, dto);
   }
 
   @Delete('/:id')
