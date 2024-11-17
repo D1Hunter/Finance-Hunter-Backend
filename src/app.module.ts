@@ -12,6 +12,8 @@ import { CategoryModule } from './modules/category/category.module';
 import { Category } from './modules/category/category.model';
 import { TransactionModule } from './modules/transaction/transaction.module';
 import { Transaction } from './modules/transaction/transaction.model';
+import { Budget } from './modules/budget/budget.model';
+import { Goal } from './modules/goal/goal.model';
 
 @Module({
   imports: [
@@ -35,7 +37,9 @@ import { Transaction } from './modules/transaction/transaction.model';
           User,
           Token,
           Category,
-          Transaction
+          Transaction,
+          Budget,
+          Goal
         ]
       })}),
     PassportModule,

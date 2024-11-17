@@ -1,6 +1,7 @@
-import { AllowNull, Column, DataType, Default, HasMany, HasOne, Model, NotNull, PrimaryKey, Table, Unique } from "sequelize-typescript";
+import { AllowNull, Column, DataType, Default, HasMany, HasOne, Model, PrimaryKey, Table, Unique } from "sequelize-typescript";
 import { Token } from "../auth/token.model";
 import { Transaction } from "../transaction/transaction.model";
+import { Budget } from "../budget/budget.model";
 
 @Table
 export class User extends Model {
@@ -35,4 +36,7 @@ export class User extends Model {
 
     @HasMany(()=>Transaction)
     transactions:Transaction[];
+
+    @HasMany(()=>Budget)
+    budgets:Budget[];
 }

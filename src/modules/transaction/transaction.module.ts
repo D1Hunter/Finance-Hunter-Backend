@@ -7,7 +7,7 @@ import { TransactionRepository } from './transaction.repository';
 import { CategoryModule } from '../category/category.module';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Transaction]),CategoryModule],
+  imports: [SequelizeModule.forFeature([Transaction]), CategoryModule],
   controllers: [TransactionController],
   providers: [TransactionService,TransactionRepository],
 })

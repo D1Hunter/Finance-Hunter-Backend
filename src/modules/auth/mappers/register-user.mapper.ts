@@ -13,7 +13,7 @@ class RegisterUserMapper {
     fromControllerToFront(dto:User,token:string){
         return {
             user:{
-                nickname: dto.nickname,
+                id: dto.id,
                 email:dto.email
             },
             token:token

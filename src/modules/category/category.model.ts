@@ -1,5 +1,6 @@
 import { AllowNull, Column, DataType, Default, HasMany, Model, PrimaryKey, Table, Unique } from "sequelize-typescript";
 import { Transaction } from "../transaction/transaction.model";
+import { Budget } from "../budget/budget.model";
 
 @Table
 export class Category extends Model {
@@ -16,4 +17,7 @@ export class Category extends Model {
 
     @HasMany(()=>Transaction)
     transactions:Transaction[];
+
+    @HasMany(()=>Budget)
+    budgets:Budget[];
 }

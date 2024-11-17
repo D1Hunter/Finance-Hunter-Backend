@@ -11,7 +11,7 @@ class LoginUserMapper {
     fromControllerToFront(dto:User,token:string){
         return {
             user:{
-                id: dto.nickname,
+                id: dto.id,
                 email:dto.email
             },
             token:token
