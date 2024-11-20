@@ -30,6 +30,14 @@ export class AuthService {
         return user;
     }
 
+    async auth(userId:string) {
+        const user = await this.userRepository.findOneById(userId);
+        if (!user) {
+            throw new HttpException('Incorrect data input.', HttpStatus.BAD_REQUEST);
+        }
+        return user;
+    }
+
     private async hashPassword(password:string):Promise<string> {
         const salt = randomBytes(16).toString('hex');
         const keylen = 64;

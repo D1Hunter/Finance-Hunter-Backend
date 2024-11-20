@@ -27,4 +27,9 @@ export class TokenService {
       lastAuthorization: new Date(),
     });
   }
+
+  async deleteAccessToken(userId:string) {
+    const token = await this.tokenRepository.findOneByUserId(userId);
+    return this.tokenRepository.delete(token.id);
+  }
 }

@@ -1,10 +1,11 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards, Request, Delete } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { TokenService } from './token.service';
 import { registerUserMapper } from './mappers/register-user.mapper';
 import { LoginUserDto } from './dto/login-user.dto';
 import { loginUserMapper } from './mappers/login-user.mapper';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -37,5 +38,26 @@ export class AuthController {
     });
     await this.tokenService.saveToken(user.id, accessToken);
     return loginUserMapper.fromControllerToFront(user, accessToken);
+  }
+
+  @Post('/')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.CREATED)
+  async auth(@Request() req){
+    const user = await this.authService.auth(req.user.id);
+    const accessToken = await this.tokenService.generateAccessToken({
+      id: user.id,
+      email: user.email,
+    });
+    await this.tokenService.saveToken(user.id, accessToken);
+    return loginUserMapper.fromControllerToFront(user, accessToken);
+  }
+
+  @Get('/logout')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  async logout(@Request() req){
+    const user = await this.authService.auth(req.user.id);
+    return this.tokenService.deleteAccessToken(user.id);
   }
 }
