@@ -8,6 +8,7 @@ import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { TransactionRepository } from './transaction.repository';
 import { CategoryService } from '../category/category.service';
+import { Category } from '../category/category.model';
 
 @Injectable()
 export class TransactionService {
@@ -27,7 +28,7 @@ export class TransactionService {
   }
 
   async getAll(limit: number, offset: number) {
-    return this.transactionRepository.findMany({ limit, offset });
+    return this.transactionRepository.findMany({ limit, offset, include:[{model:Category,attributes:['id', 'name']}]});
   }
 
   async getAllByCategory(categoryId: string, limit, offset) {

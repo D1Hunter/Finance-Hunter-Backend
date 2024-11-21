@@ -38,7 +38,7 @@ export class TransactionController {
   @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   async getAll(
-    @Query('limit', ToNumberPipe) limitQ: number = 9,
+    @Query('limit', ToNumberPipe) limitQ: number = 0,
     @Query('offset', ToNumberPipe) offsetQ: number = 0,
   ) {
     const { limit, offset } = getTransactionsMapper.fromControllerToService(

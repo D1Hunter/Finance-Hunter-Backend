@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { UserRepository } from '../user/user.repository';
 import { LoginUserDto } from './dto/login-user.dto';
-import { randomBytes, scrypt, timingSafeEqual } from 'node:crypto';
+import { randomBytes, scrypt } from 'node:crypto';
 
 @Injectable()
 export class AuthService {
