@@ -12,7 +12,7 @@ export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly tokenService: TokenService,
-  ) {}
+  ) { }
 
   @Post('register')
   @HttpCode(HttpStatus.OK)
@@ -40,10 +40,10 @@ export class AuthController {
     return loginUserMapper.fromControllerToFront(user, accessToken);
   }
 
-  @Post('/')
+  @Get('/')
   @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.CREATED)
-  async auth(@Request() req){
+  async auth(@Request() req) {
     const user = await this.authService.auth(req.user.id);
     const accessToken = await this.tokenService.generateAccessToken({
       id: user.id,
@@ -56,7 +56,7 @@ export class AuthController {
   @Get('/logout')
   @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
-  async logout(@Request() req){
+  async logout(@Request() req) {
     const user = await this.authService.auth(req.user.id);
     return this.tokenService.deleteAccessToken(user.id);
   }
